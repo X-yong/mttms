@@ -75,12 +75,21 @@ public class BillController  {
 	 */
 	@RequestMapping("/detailInfo")
 	@ResponseBody
-	public Map detailInfo(String b_id,String yearmonth){
+	public Map detailInfo(String b_id,String yearmonth,
+			  @RequestParam(value="page",defaultValue="1")int page,
+              @RequestParam(value="rows",defaultValue="5")int rows){
 		 System.out.println("查询详单！");
 		 System.out.println("b_id："+b_id +"年月："+yearmonth);
-		 if(b_id !=null && b_id !="")
-		 return billService.selectBillDetailService( Integer.parseInt(b_id),yearmonth);
-		  else return null;
+		 Map map = new HashMap();
+		 Pagenation pagenation = new Pagenation(page, rows);
+		 if(b_id !=null && b_id !=""){
+		 map.put("b_id", Integer.parseInt(b_id));
+		 map.put("yearmonth",yearmonth);
+		 map.put("rows", rows);
+		 map.put("start", pagenation.getStart());
+	     return billService.selectBillDetailService(map);
+		 }
+		 else return null;
 			
 			
 	}

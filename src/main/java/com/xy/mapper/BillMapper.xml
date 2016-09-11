@@ -49,12 +49,12 @@
 		    limit #{start},#{rows}
 	</select>
 	<select id="selectBillDetailDao" resultMap="BillResultMap" >
-	   select * from billdetail where b_id=#{0} and logintime like CONCAT(CONCAT('%',#{1}),'%')
+	   select * from billdetail where b_id=#{b_id} and logintime like CONCAT(CONCAT('%',#{yearmonth}),'%') limit #{start},#{rows}
 	</select>
 	<select id="selectAllCountDao" resultType="int">
 	   select count(*) from bill
 	</select>
 	<select id="selectDetailCountDao" resultType="int">
-	   select count(*) from billdetail
+	   select count(*) from billdetail where b_id=#{b_id} and logintime like CONCAT(CONCAT('%',#{yearmonth}),'%')
 	</select>
 </mapper>

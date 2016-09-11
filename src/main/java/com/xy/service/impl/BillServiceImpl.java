@@ -31,10 +31,11 @@ public class BillServiceImpl implements BillService {
 		return map2;
 	}
     //查询详单信息
-	public Map selectBillDetailService(int b_id,String yearmonth) {
+	public Map selectBillDetailService(Map map2) {
 		Map map = new HashMap<String ,Object>();
-		List dList = billDao.selectBillDetailDao(b_id,yearmonth);
-		int  count = billDao.selectDetailCountDao();
+		List dList = billDao.selectBillDetailDao(map2);
+		System.out.println(dList);
+		int  count = billDao.selectDetailCountDao(map2);
 		map.put("total", count);
 		map.put("rows", dList);
 		return map;

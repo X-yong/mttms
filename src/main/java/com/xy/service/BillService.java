@@ -13,5 +13,5 @@ public interface BillService {
 	 * @param b_id
 	 * @return
 	 */
-	public Map selectBillDetailService(int b_id ,String yearmonth);
+	public Map selectBillDetailService(Map map);
 }

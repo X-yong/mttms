@@ -146,6 +146,7 @@
                                                                   月
                     </div>
                     <div><input type="button" value="搜索" class="btn_search" onclick="searchBill()" /></div>
+                    <div><input type="button" value="搜索所有" class="btn_search" onclick="location.href='${pageContext.request.contextPath}/view/bill.do';" /></div>
                 </div>  
               <!--数据区域：用表格展示数据-->
 			 <div id="data">
