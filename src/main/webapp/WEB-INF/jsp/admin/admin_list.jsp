@@ -10,7 +10,7 @@
         <link type="text/css" rel="stylesheet" media="all" href="../styles/global_color.css" /> 
         <script type="text/javascript" src="<%=request.getContextPath()%>/jquery/jquery-2.0.0.js"></script>
         <script language="javascript" type="text/javascript">
-          function deleteAdmin(s){
+        function deleteAdmin(s){
         		  var r = window.confirm("确定要删除此管理员吗？");
         		  if(r){
         			  $.ajax({
@@ -125,6 +125,7 @@
 		<!--Logo区域结束-->
         <!--导航区域开始-->
 		<%@ include file="../include/menu.jsp" %>
+		<input id="indexs" value="admin" hidden/>
         <!--导航区域结束-->
       
         <!--主要区域开始-->

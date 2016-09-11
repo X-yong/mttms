@@ -89,6 +89,7 @@
 		<!--Logo区域结束-->
         <!--导航区域开始-->
 		<%@ include file="../include/menu.jsp" %>
+		<input id="indexs" value="pswmodi" hidden/>
         <!--导航区域结束-->
         <div id="main">      
             <!--保存操作后的提示信息：成功或者失败-->      

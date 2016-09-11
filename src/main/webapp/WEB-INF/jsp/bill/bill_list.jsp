@@ -128,6 +128,7 @@
 		<!--Logo区域结束-->
         <!--导航区域开始-->
 		<%@ include file="../include/menu.jsp" %>
+		<input id="indexs" value="bill" hidden/>
         <!--导航区域结束-->
         <!--主要区域开始-->
         <div id="main">
