@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+	http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop.xsd ">
+
+
+<!--自动扫描，自动装配bean  -->
+<context:component-scan base-package="com.xy.dao"/>
+<context:component-scan base-package="com.xy.service"/>
+<!-- 加载jdbc属性文件到上下文 -->
+<!-- <context:property-placeholder location="jdbc.prop"/> -->
+<!-- 使用了dbcp数据源，从context读取了jdbc属性文件中设定的值 -->
+<!-- <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="${jdbc.driverClassName}"/>
+    <property name="url" value="${jdbc.url}"/>
+    <property name="username" value="${jdbc.username}"/>
+    <property name="password" value="${jdbc.password}"/>
+</bean> -->
+<!-- 暂时 -->
+<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+    <property name="url" value="jdbc:mysql://localhost:3306/test"/>
+    <property name="username" value="root"/>
+    <property name="password" value="123"/>
+</bean>
+<!-- 添加事务管理 -->
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"/>
+</bean>
+<!-- 定义spring aop通知 -->
+<tx:advice id="txAdvice" transaction-manager="transactionManager"> 
+    <tx:attributes>
+         <tx:method name="insert*" propagation="REQUIRED"/>
+         <tx:method name="delete*" propagation="REQUIRED"/>
+         <tx:method name="update*" propagation="REQUIRED"/>
+         <tx:method name="select*" propagation="REQUIRED"/>
+         <tx:method name="edit*" propagation="REQUIRED"/>
+         <tx:method name="save*" propagation="REQUIRED"/>
+         <tx:method name="add*" propagation="REQUIRED"/>
+         <tx:method name="change*" propagation="REQUIRED"/>
+         <tx:method name="find*" propagation="REQUIRED" read-only="true"/>
+         <tx:method name="load*" propagation="REQUIRED" read-only="true"/>
+         <tx:method name="get*" propagation="REQUIRED" read-only="true"/>
+         <tx:method name="*" propagation="REQUIRED"/>
+    </tx:attributes>
+</tx:advice>
+<!-- 定义切入点 -->
+<aop:config>
+    <aop:pointcut expression="execution(* com.xy.service.*.*(..))" id="myPointCut"/>
+    <aop:advisor advice-ref="txAdvice" pointcut-ref="myPointCut"/>
+</aop:config>
+<!-- 配置mybatis sqlsessionFactory -->
+<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" > 
+   <property name = "dataSource"  ref="dataSource" />
+   <!-- 自动扫描 mapper .xml文件 -->
+   <property name = "mapperLocations"  value="classpath:com/xy/mapper/*.xml" />
+   <!-- mybatis配置文件 -->
+   <property name = "configLocation"  value="classpath:mybatis-config.xml" />
+</bean>
+<!-- Dao 接口所在的包名，spring会自动查找其下的类 -->
+<bean class = "org.mybatis.spring.mapper.MapperScannerConfigurer">
+	<property name ="basePackage" value="com.xy.dao"/>
+	<property name ="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+</bean>
+</beans>

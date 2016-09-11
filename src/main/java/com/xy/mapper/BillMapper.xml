@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xy.dao.BillDao">
+   	<resultMap type="BillDetail" id="BillResultMap">
+		<id property="d_id" column="did" />
+	    <result property="b_id" column="b_id"/>
+	    <result property="cost_id" column="cost_id"/>
+	    <result property="logintime" column="logintime"/>
+	    <result property="loginouttime" column="loginouttime"/>
+	    <result property="b_money" column="money"/>
+	    <result property="duration" column="duration"/>
+	    <association property="cost" column="cost_id" select="com.xy.dao.CostDao.selectCostDaoByid"/>
+	    <association property="business" column="b_id" select="com.xy.dao.BusinessDao.selectAllBybidDao"/> 
+	</resultMap>
+	<resultMap type="Bill" id="BillMap">
+		<id property="bill_id" column="bill_id" />
+	    <result property="b_id" column="b_id"/>
+	    <result property="c_id" column="c_id"/>
+	    <result property="bill_money" column="bill_money"/>
+	    <result property="pay_way" column="pay_way"/>
+	    <result property="pay_state" column="pay_state"/>
+	    <result property="yearmonth" column="yearmonth"/>
+	    <result property="alltime" column="alltime"/>
+        <association property="customer" column="c_id" select="com.xy.dao.CustomerDao.selectCustomerDaoByCid"/> 
+	</resultMap>
+
+	<!-- 条件查询所有账单信息 -->
+		<select id="billSelectAllDao" resultMap="BillMap" parameterType="Map">
+		select * from bill
+		<where>
+			 <if test="c_idcard !=null and c_idcard !=''">
+			     and c_id =( select c_id from customer  where c_idcard=#{c_idcard })
+			 </if>
+			 <if test="c_username !=null and c_username !=''">
+			  	 and c_id =( select c_id from customer  where c_username=#{c_username })
+			 </if>
+			 <if test="c_name !=null and c_name !=''">
+			  	 and c_id =( select c_id from customer  where c_name=#{c_name })
+			 </if>
+			 <if test="yearmonth !='-1-0-1' and yearmonth !=null  ">
+			 	 and yearmonth like CONCAT(CONCAT('%',#{yearmonth}),'%')
+			 </if>
+		</where>
+		     <if test="tab !=-1 and tab !=null and tab !=''">
+			     ORDER BY alltime desc
+			 </if>
+		    limit #{start},#{rows}
+	</select>
+	<select id="selectBillDetailDao" resultMap="BillResultMap" >
+	   select * from billdetail where b_id=#{0} and logintime like CONCAT(CONCAT('%',#{1}),'%')
+	</select>
+	<select id="selectAllCountDao" resultType="int">
+	   select count(*) from bill
+	</select>
+	<select id="selectDetailCountDao" resultType="int">
+	   select count(*) from billdetail
+	</select>
+</mapper>

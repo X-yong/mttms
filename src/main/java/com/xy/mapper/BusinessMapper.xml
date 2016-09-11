@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xy.dao.BusinessDao"> 
+	<resultMap type="Business" id="buss" >
+		<id property="b_id" column="buss_id" />
+		<result property="c_id" column="c_id" />
+		<result property="b_osusername" column="b_osusername" />
+		<result property="b_ospassword" column="b_ospassword" />
+		<result property="b_createtime" column="b_createtime" />
+		<result property="b_deletetime" column="b_deletetime" />
+		<result property="b_stoptime" column="b_stoptime" />
+		<result property="b_state" column="b_state" />
+		<result property="cost_id" column="cost_id" />
+		<association property="cost" column="cost_id" select="com.xy.dao.CostDao.selectCostDaoByid" />
+		<association property="customer" column="c_id" select="com.xy.dao.CustomerDao.selectCustomerDaoByCid"/>
+			
+	</resultMap>
+		
+<!-- 通过连接接查询数据库信息 -->
+	<select id="selectBusinessAllDao" parameterType="Map" resultMap="buss">
+		select * from business 
+		 <where>
+			<if test="b_state !=3 and b_state !=null and b_state !='' ">
+				and b_state =#{b_state}		
+			</if>
+			<if test="b_osusername != null" >
+				and b_osusername like CONCAT(CONCAT('%',#{b_osusername}),'%')		
+			</if>
+			<if test="c_id != -1" >
+				and c_id =#{c_id}		
+			</if>
+		</where> 
+		       limit #{start},#{rows}
+	</select>
+	<update id="updateBusinessByCidDao" parameterType="Customer">
+	     update business set b_state='2' where c_id=#{c_id}
+	</update>
+	<update id="operateBycidDao" parameterType="int">
+	     update business set b_state='1' where c_id=#{c_id}
+	</update>
+	<select id="selectAllcountDao" resultType="int">
+	     select count(*) from business 
+	</select>
+	<select id="selectBusinessBycidDao" resultMap="buss">
+	     select * from business where c_id=#{c_id}
+	</select>
+	<insert id="insertBusinessDao" parameterType="Map">
+		 insert into business values(null,#{c_id},#{b_osusername},#{b_ospassword},NOW(),#{b_state},null,null,#{cost_id},null,null,null,null,null)	
+	</insert>
+	<update id="updateBusinessByBidDao" parameterType="Business">
+		<if test="b_state==1">
+		   update business set b_state=#{b_state} ,b_stoptime = NOW(), b_createtime=null  where b_id=#{b_id} 
+		</if>
+		<if test="b_state==0">
+		   update business set b_state=#{b_state} ,b_stoptime =null, b_createtime=now() where b_id=#{b_id} 
+		</if>
+	</update>
+	<update id="deleteBusinessByBidDao" parameterType="Business">
+		   update business set b_state='2' ,b_deletetime =now() where b_id=#{b_id} 
+	</update>
+	<update id="updateBusinessInfoDao" parameterType="Map">
+	     update business set b_id=#{b_id},b_osusername=#{b_osusername},cost_id=#{cost_id} where b_id=#{b_id}
+	</update>
+	<select id="selectAllBybidDao" resultMap="buss">
+	     select * from business where b_id=#{b_id}
+	</select>
+</mapper>	
