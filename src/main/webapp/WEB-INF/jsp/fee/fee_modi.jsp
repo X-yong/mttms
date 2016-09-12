@@ -141,7 +141,7 @@
                 </div>                    
                 <div class="button_info clearfix">
                     <input type="submit" value="保存" class="btn_save"  />
-                    <input type="button" value="取消" class="btn_save" onclick="location.href='${pageContext.request.contextPath}/cost/costInfo.do'"/>
+                    <input type="button" value="取消" class="btn_save" onclick="location.href='${pageContext.request.contextPath}/cost/costInfo.do'" />
                 </div>
             </form>
         </div>

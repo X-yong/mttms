@@ -31,7 +31,7 @@
 				and c_id =#{c_id}		
 			</if>
 		</where> 
-		       limit #{start},#{rows}
+		    order by b_id desc limit #{start},#{rows}
 	</select>
 	<update id="updateBusinessByCidDao" parameterType="Customer">
 	     update business set b_state='2' where c_id=#{c_id}

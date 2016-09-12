@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xy.entity.Cost;
@@ -183,8 +182,7 @@ public class CostController{
 	}
 	@RequestMapping("/publicPage")
 	public String publicPage(HttpServletRequest request){
-		
-		
+				
 		return "fee/fee_list";
 	}
 	

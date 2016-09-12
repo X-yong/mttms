@@ -16,8 +16,8 @@
 		if(id=="index"){
 			$("#index").removeClass("index_off");
 			$("#index").addClass("index_on");
-			$("#navi").css({"position":"absolute","bottom":"0","background-image":"url                                       (../images/index_navi_bg.png)"});
-			$("#navi li").css("margin-top","10px");
+			/* $("#navi").css({"position":"absolute","bottom":"0","background-image":"url                                       (../images/index_navi_bg.png)"});
+			$("#navi li").css("margin-top","10px"); */
 		}else if(id=="admin"){
 			$("#admin").removeClass("admin_off");
 			$("#admin").addClass("admin_on");       		
@@ -37,11 +37,11 @@
 			$("#pswmodi").removeClass("password_off");
 			$("#pswmodi").addClass("password_on"); 
 		}else if(id=="report"){
-			$("#report").removeClass("password_off");
-			$("#report").addClass("password_on"); 
+			$("#report").removeClass("report_off");
+			$("#report").addClass("report_on"); 
 		}else if(id=="bill"){
-			$("#bill").removeClass("password_off");
-			$("#bill").addClass("password_on"); 
+			$("#bill").removeClass("bill_off");
+			$("#bill").addClass("bill_on"); 
 		}
 		
 	});   
