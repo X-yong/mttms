@@ -140,16 +140,25 @@ public class CostController{
 		return "fee/fee_modi";
 	}
 	@RequestMapping("/updatecost")
+	@ResponseBody
 	public String updateCost(Cost cost,HttpServletRequest request){
 		System.out.println("修改资费信息");
 		System.out.println(cost.getCost_id());
-		
-		int uresult = costService.updateCostService(cost);
-		if(uresult !=0){
-			request.setAttribute("result",1 );
-			return "redirect:/cost/costInfo.do";
-		}else 
-		return "fee/fee_modi";
+		String cost_name = cost.getCost_name();
+		Cost cost3 = costService.selectCostServiceById(cost);
+		Cost result = costService.selectCostServiceByName(cost_name);
+		if(result!=null &&cost3.getCost_id()!=result.getCost_id())//资费名已存在
+		 {
+			System.out.println("重名");
+			return "false";
+	 	 }else{
+	 		int uresult = costService.updateCostService(cost);//修改资费
+	 		if(uresult !=0){
+	 			System.out.println("修改成功");
+	 			return "true";
+	 		}
+	 	 }
+		return "false";		
 	}
 	/**
 	 * 排序

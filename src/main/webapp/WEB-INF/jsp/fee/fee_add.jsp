@@ -62,7 +62,7 @@
 				$("#basemmoney").html("请输入0到99999.99之间的值！");
 				return false
 			}
-			if (cost_singleoney == null || cost_singleoney == "") {
+			if (cost_singlemoney == null || cost_singlemoney == "") {
 				$("#singlemoney").addClass("validate_msg_long error_msg")
 				$("#singlemoney").html("单位费用不能为空！");
 				return false
@@ -131,10 +131,11 @@
 		var divResult = document.getElementById("save_result_info");
 		if (flag)
 			divResult.style.display = "block";
-		else
+		else{
 			divResult.style.display = "none";
+			window.location.href="${pageContext.request.contextPath}/cost/costInfo.do";
+		}
 	}
-
 	//切换资费类型
 	function feeTypeChange(type) {
 		var inputArray = document.getElementById("main").getElementsByTagName(

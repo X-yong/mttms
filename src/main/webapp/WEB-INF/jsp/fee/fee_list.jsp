@@ -173,9 +173,9 @@
                         <tr>
                             <td>${resultFeeList.cost_id }</td>
                             <td><a href="${pageContext.request.contextPath}/cost/detailCost.do?cost_name=${resultFeeList.cost_name}">${resultFeeList.cost_name}</a></td>
-                            <td>${resultFeeList.cost_basetime }</td>
-                            <td>${resultFeeList.cost_basemoney }</td>
-                            <td>${resultFeeList.cost_singlemoney }</td>
+                            <td>${resultFeeList.cost_basetime=='0'?'——':resultFeeList.cost_basetime }</td>
+                            <td>${resultFeeList.cost_basemoney=='0'?'——':resultFeeList.cost_basemoney }</td>
+                            <td>${resultFeeList.cost_singlemoney=='0'?'——':resultFeeList.cost_singlemoney }</td>
                             <td>${resultFeeList.cost_createtime }</td>
                             <td>${resultFeeList.cost_starttime }</td>
                             <td>${resultFeeList.cost_state =='0'?'开通':resultFeeList.cost_state =='1'?'暂停':'删除'}</td>
