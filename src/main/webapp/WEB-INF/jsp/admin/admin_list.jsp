@@ -22,12 +22,17 @@
          					   $("#operate_result_info").removeClass("operate_fail")
            				 	   $("#operate_result_info").addClass("operate_success");
          					   showResult()
-         					 }else{
+         					 }else if(result=="error"){
          						 $("#operate_result_info").removeClass("operate_success")
              				 	 $("#operate_result_info").addClass("operate_fail");
          						 $("#operate_result_info").html("删除管理员失败");
          						 showResult()
-         					 }
+         					 }else if(result=="notOperte"){
+        						 $("#operate_result_info").removeClass("operate_success")
+            				 	 $("#operate_result_info").addClass("operate_fail");
+        						 $("#operate_result_info").html("安全报警：此操作不能进行！！！！");
+        						 showResult()
+        					 }
          				 } 
         			  })
         		  }

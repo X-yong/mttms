@@ -1,6 +1,7 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title></title>
@@ -115,6 +116,14 @@
                    <span class="required">*</span>
                     <div class="validate_msg_medium" id="e_email">50长度以内，符合 email 格式</div>
                 </div>
+                 <div class="text_info clearfix"><span>用户图片：</span></div>
+                  <div class="input_info">
+                   <img src="<%=request.getContextPath()%>${adminInfo.a_photo}" alt="photo"/>
+                </div>
+                 <!-- <div class="text_info clearfix"><span>照片上传：</span></div>
+                   <div class="input_info">
+                   <input type="file" accept=".jpg,.png,.jpeg,.bmp" name ="file" /><br/>
+                   </div>  -->
                 <div class="text_info clearfix"><span>创建时间：</span></div>
                 <div class="input_info"><input type="text" readonly="readonly" class="readonly" name ="a_createtime" value="${sessionScope.resultUserinfo.a_createtime}"/></div>
                 <div class="button_info clearfix">

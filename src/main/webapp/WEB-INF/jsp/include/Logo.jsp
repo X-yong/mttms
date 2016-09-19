@@ -9,10 +9,10 @@
 </head>
 <body>
 	<div id="header">
-	     <% Admin admin =(Admin)session.getAttribute("adminInfo");%>
+	     <% Admin admin =(Admin)session.getAttribute("adminInfo"); %>
 		<img src="<%=request.getContextPath()%>/images/logo.png" alt="logo" class="left" />
 		<img src="<%=request.getContextPath()+admin.getA_photo()%>" alt="photo"/>
-			当前用户 : <%=admin.getA_name() %>  &nbsp;&nbsp;
+			当前用户 : <a href="${pageContext.request.contextPath}/admin/userInfo.do"><%=admin.getA_name() %></a>  &nbsp;&nbsp;
 		 <a href="${pageContext.request.contextPath}/view/exit.do">[退出]</a>
 	</div>
 </body>

@@ -119,6 +119,7 @@
 
 	//表格数据格式化
 	function formatId(val, row) {
+		
 		return row.customer.c_idcard;
 	}
 	function formatName(val, row) {
@@ -137,6 +138,7 @@
 	}
 	//详细
 	function formatDetail(val, row) {
+		
 		return '<a href="#" onclick="detailInfo('+row.b_id+')" class="easyui-linkbutton" iconCls="icon-edit">'
 				+ val + '</a>'
 	}
@@ -310,6 +312,8 @@
             $("#ae_rpsw").html(""); 
             return true;
 	}
+	    
+	    //增加
 	    $(function(){
 	    	$("#addbuss").click(function(){
 	    		if(saveBusiness()==true){
@@ -342,6 +346,7 @@
 		$('#b_id').val(b_id);
 		$('#osuser').val(row.b_osusername);
 		
+		$("#cc").val(row.cost_id).attr("checked",true);
 		$('#main').hide();
 		$('#add').show();
 		$("#d1").hide();
@@ -447,16 +452,16 @@
 			<table id="dg" class="easyui-datagrid">
 				<thead>
 					<tr>
-						<th field="b_id" sortable="true" width="80"
+						<th field="b_id" sortable="true" width="80" align="center"
 							formatter="formatDetail">业务ID</th>
-						<th field="c_id" sortable="true" width="80">财务账户ID</th>
-						<th field="c_idcard" width="175" formatter="formatId">身份证号</th>
-						<th field="c_name" width="90" formatter="formatName">姓名</th>
-						<th field="b_osusername" width="70">OS账号</th>
-						<th field="b_state" sortable="true" width="70"
+						<th field="c_id" sortable="true" align="center" width="80">财务账户ID</th>
+						<th field="c_idcard" width="175"  align="center" formatter="formatId">身份证号</th>
+						<th field="c_name" width="90"  align="center"formatter="formatName">姓名</th>
+						<th field="b_osusername" align="center" width="70">OS账号</th>
+						<th field="b_state" sortable="true" align="center" width="70"
 							formatter="formatState">状态</th>
-						<th field="cost_name" width="150" formatter="formatCname">资费名</th>
-						<th field="operate" width="200" formatter="formatOperate">操作</th>
+						<th field="cost_name" width="150" align="center" formatter="formatCname">资费名</th>
+						<th field="operate" width="200" align="center" formatter="formatOperate">操作</th>
 					</tr>
 				</thead>
 			</table>
@@ -601,7 +606,7 @@
 				<div class="input_info">
                     <select class="width150" id="cc" name="cost_name">
                       <c:forEach items="${costname}" var="costnames" varStatus="status">
-                         <option >${costnames.cost_name} </option>
+                         <option value='${costnames.cost_id}'>${costnames.cost_name} </option>
                      </c:forEach>
                     </select>
                     <div class="validate_msg_long">请修改资费类型，或者取消修改操作。</div>                      

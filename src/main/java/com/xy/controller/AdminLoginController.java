@@ -145,7 +145,8 @@ public class AdminLoginController  {
 	@RequestMapping("/addAdminSave")
 	public String addAdmin(Admin admin,HttpServletRequest request,
 			              @RequestParam("a_authoritys")String a_authoritys,
-			              @RequestParam("file")MultipartFile file) throws IllegalStateException, IOException {
+			              @RequestParam("file")MultipartFile file)  {
+		
 		System.out.println("添加管理员");
 		System.out.println("选择的权限："+a_authoritys);
 		HttpSession session =request.getSession();		
@@ -172,7 +173,14 @@ public class AdminLoginController  {
 	    	    }else {
 		    		request.setAttribute("message", "增加管理员成功！！");
 		    		request.setAttribute("tab", 1);
-		    		file.transferTo(new File(path+"upload/"+date+file.getOriginalFilename()));
+		    		try {
+						file.transferTo(new File(path+"upload/"+date+file.getOriginalFilename()));
+					} catch (IllegalStateException e) {
+						
+					   System.out.println("图片上传异常");
+					} catch (IOException e) {
+					   System.out.println("图片上传异常");
+					}
 		    		return "admin/admin_add";
 			    }
 		    }else{
@@ -193,6 +201,12 @@ public class AdminLoginController  {
 	@RequestMapping("/deleteAdminSave")
 	@ResponseBody
 	public String deleteAdmin(Admin admin, HttpServletRequest request){
+		Admin admin2 = adminService.selectByaidService(admin);
+		String username = admin2.getA_username();
+		System.out.println(username);
+		if("xy".equals(username)){
+			return "notOperte";
+		}
 		//删除管理员
 		int a_id = Integer.parseInt(request.getParameter("a_id"));
 		admin.setA_id(a_id);
@@ -211,6 +225,7 @@ public class AdminLoginController  {
 	//显示修改管理员信息jsp
 	@RequestMapping("/updateAdminView")
 	public String updateAdminView(HttpServletRequest request,Admin admin){
+		
 		System.out.println("修改管理员信息");
 		HttpSession session = request.getSession();
 		int a_id = Integer.parseInt(request.getParameter("a_id"));
@@ -223,6 +238,10 @@ public class AdminLoginController  {
 	@RequestMapping("/updateAdminSaves")
 	@ResponseBody
 	public String updateAdmin(Admin admin,@RequestParam("a_authoritys")String a_authoritys, HttpServletRequest request){
+		System.out.println(admin.getA_username());
+		if("xy".equals(admin.getA_username())){
+			 return "noOperate";		
+		}
 		HttpSession session = request.getSession();
 		int a_id = (Integer) session.getAttribute("a_id");
 		admin.setA_id(a_id);

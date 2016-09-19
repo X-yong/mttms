@@ -76,7 +76,14 @@
             			success:function(result){
             				if(result =="success"){
             					showResult()
-            				}else{alert("修改信息失败！！！")}
+            				}else if(result=="fail"){
+            					alert("修改信息失败！！！")
+            				}else if(result =="noOperate"){
+            					$("#save_result_info").removeClass("save_success");
+            					$("#save_result_info").addClass("save_fail");
+            					$("#save_result_info").html("安全报警：此操作不能进行！！！！！");
+            					 showResult()
+            				}
             			}
             		 }) 
         		}
@@ -118,7 +125,7 @@
                         <div class="validate_msg_long" id="e_name">20长度以内的汉字、字母、数字的组合</div>
                     </div>
                     <div class="text_info clearfix"><span>管理员账号：</span></div>
-                    <div class="input_info"><input type="text" readonly="readonly" class="readonly" value="${resultAdminInfo.a_username}"  /></div>
+                    <div class="input_info"><input type="text" readonly="readonly" name="a_username" class="readonly" value="${resultAdminInfo.a_username}"  /></div>
                     <div class="text_info clearfix"><span>电话：</span></div>
                     <div class="input_info">
                         <input type="text" id="phone" name="a_phone" value="${resultAdminInfo.a_phone}"  />

@@ -154,15 +154,15 @@
 				<table id="dg" class="easyui-datagrid">
 					<thead>
 						<tr>										    
-							<th field="bill_id"  width="80" >账单ID</th>
-							<th field="c_name"  width="80" formatter="formatCname">姓名</th>
-							<th field="c_idcard" width="175" formatter="formatId">身份证号</th>
-							<th field="c_username" width="90" formatter="formatCuser">财务账号</th>
-							<th field="bill_money" width="70">费用</th>
-							<th field="yearmonth"  width="150" >月份</th>
-							<th field="pay_way" width="85" >支付方式</th>
-							<th field="pay_state" width="87" >支付状态</th>
-							<th field="operate" width="100" formatter="formatDetail">操作</th>
+							<th field="bill_id"  width="80" align="center" >账单ID</th>
+							<th field="c_name"  width="80"  align="center"formatter="formatCname">姓名</th>
+							<th field="c_idcard" width="175"  align="center"formatter="formatId">身份证号</th>
+							<th field="c_username" width="90" align="center" formatter="formatCuser">财务账号</th>
+							<th field="bill_money" width="70" align="center">费用</th>
+							<th field="yearmonth"  width="150" align="center">月份</th>
+							<th field="pay_way" width="85" align="center">支付方式</th>
+							<th field="pay_state" width="87"align="center" >支付状态</th>
+							<th field="operate" width="100"align="center" formatter="formatDetail">操作</th>
 						</tr>
 					</thead> 
 				</table> 
@@ -191,13 +191,13 @@
                    <table id="dt" class="easyui-datagrid">
 					<thead>
 						<tr>	
-							<th field="b_osusername"  width="100" formatter ="formatOS" >OS账号</th>									    
-							<th field="loginIp"  width="150" >客户登陆IP</th>
-							<th field="logintime"  width="160" >登入时刻</th>
-							<th field="loginouttime" width="160" >登出时刻</th>
-							<th field="duration" width="100" >时长(秒)</th>
-							<th field="d_money" width="100">费用</th>
-							<th field="cost_name"  width="145" formatter="formatCostN">资费</th>
+							<th field="b_osusername"  width="100" align="center" formatter ="formatOS" >OS账号</th>									    
+							<th field="loginIp"  width="150"  align="center">客户登陆IP</th>
+							<th field="logintime"  width="160"  align="center">登入时刻</th>
+							<th field="loginouttime" width="160"align="center" >登出时刻</th>
+							<th field="duration" width="100" align="center">时长(秒)</th>
+							<th field="d_money" width="100" align="center">费用</th>
+							<th field="cost_name"  width="145" align="center" formatter="formatCostN">资费</th>
 						</tr>
 					</thead> 
 				</table> 
