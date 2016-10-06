@@ -120,10 +120,10 @@
                   <div class="input_info">
                    <img src="<%=request.getContextPath()%>${adminInfo.a_photo}" alt="photo"/>
                 </div>
-                 <!-- <div class="text_info clearfix"><span>照片上传：</span></div>
+                  <div class="text_info clearfix"><span>照片上传：</span></div>
                    <div class="input_info">
                    <input type="file" accept=".jpg,.png,.jpeg,.bmp" name ="file" /><br/>
-                   </div>  -->
+                   </div>  
                 <div class="text_info clearfix"><span>创建时间：</span></div>
                 <div class="input_info"><input type="text" readonly="readonly" class="readonly" name ="a_createtime" value="${sessionScope.resultUserinfo.a_createtime}"/></div>
                 <div class="button_info clearfix">
