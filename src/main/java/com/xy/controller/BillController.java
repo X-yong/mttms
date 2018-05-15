@@ -1,7 +1,6 @@
 package com.xy.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xy.entity.Customer;
 import com.xy.service.BillService;
 import com.xy.service.CustomerService;
 import com.xy.util.Pagenation;
@@ -43,11 +41,6 @@ public class BillController  {
 		System.out.println("搜索所有账单信息");
 		Pagenation pagenation = new Pagenation(page, rows);
 		Map map = new HashMap();
-		System.out.println(c_idcard);
-		System.out.println(c_username);
-		System.out.println(c_name);
-		System.out.println(year);
-		System.out.println(month);
 		String yearmonth=null;
 		if(year!=null && month !=null ){
 	    	if("全部".equals(month)){

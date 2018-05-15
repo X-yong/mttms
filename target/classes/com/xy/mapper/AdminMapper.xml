@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xy.dao.AdminDao">
+	<resultMap type="Admin" id="AdminMap">
+	    <id property="a_id" column="a_id" />
+		<result property="a_name" column="a_name"/>
+		<result property="a_password" column="a_password"/>
+		<result property="a_username" column="a_username"/>
+		<result property="a_phone" column="a_phone"/>
+		<result property="a_email" column="a_email"/>
+		<result property="a_createtime" column="a_createtime"/>
+		<result property="a_authority" column="a_authority"/>
+		<result property="a_photo" column="a_photo"/>
+	</resultMap>
+	<!-- 管理员信息管理 -->
+	<select id="loginDao" resultMap="AdminMap" parameterType="Admin">
+	     select * from admin
+	     <where>
+	       <if test="a_username !=null">
+	        and a_username= #{a_username} 
+	       </if>
+	       <if test="a_password !=null">
+	        and a_password= #{a_password}
+	       </if>
+	       <if test="a_name !=null">
+	        and a_name=#{a_name}
+	       </if>
+	     </where>
+	</select>
+	<select id="selectByaidDao" resultMap="AdminMap" parameterType="Admin">
+	   select * from admin where a_id=#{a_id}
+	</select>
+	<select id="selectExitAdminDao" resultMap="AdminMap" parameterType="Admin">
+	   select * from admin where a_username =#{a_username}
+	</select>
+	<select id="searchAdminInfoDao" resultMap="AdminMap" parameterType="Admin">
+	     select * from admin
+	     <where>
+	     	<if test="a_authority !=null and a_authority !=''">
+	     	 and a_authority like CONCAT(CONCAT('%',#{a_authority}),'%')
+	     	</if>
+	     	<if test="a_name !=null and a_name !=''">
+	     	 and a_name like CONCAT(CONCAT('%',#{a_name}),'%')
+	     	</if>
+	     </where>
+	         order by a_createtime desc
+	</select>
+	<insert id="insertAdminDao" parameterType="Admin">
+	     insert into admin(a_name,a_username,a_password,a_phone,a_email,a_createtime,a_authority,a_photo) 
+	     values (#{a_name},#{a_username},#{a_password},#{a_phone},#{a_email},#{a_createtime},#{a_authority},#{a_photo})
+	</insert>
+	<delete id="deleteAdminDao" parameterType="Admin">
+	     delete from admin where a_id=#{a_id}
+	</delete>
+	<update id="updateAdminDao" parameterType="Admin">
+		 update admin set a_name=#{a_name},a_phone=#{a_phone},a_email=#{a_email},a_authority=#{a_authority}
+		 where a_id=#{a_id}
+	</update>
+	<update id="restPswsDao" parameterType="List">
+	    update admin set a_password='123456' where a_id in
+	    <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+	</update> 
+	<!-- 用户信息管理 -->
+	<update id="updateInfoDao"  parameterType="Admin">
+	     update admin 
+	     <set>
+	     	<if test="a_name !=null">
+	        a_name=#{a_name}, 
+	        </if>
+	        <if test="a_phone !=null">
+	        a_phone=#{a_phone},
+	        </if>
+	        <if test="a_email !=null">
+	        a_email= #{a_email},
+	        </if>
+	        <if test="a_authority !=null"> 
+	        a_authority = #{a_authority}
+	        </if>
+	     </set>
+	       where a_username = #{a_username} and a_password=#{a_password}
+	</update>
+	<update id="updatePasswordDao"  parameterType="Map">
+	     update admin set a_password=#{r_password} where a_username= #{a_username} and a_password= #{a_password}
+	</update>
+	
+</mapper>

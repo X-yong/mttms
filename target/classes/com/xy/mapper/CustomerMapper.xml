@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xy.dao.CustomerDao">
+	<resultMap type="Customer" id="CustomerResultMap">
+		<id property="c_id" column="c_id"  />
+		<result property="c_name" column="c_name" />
+		<result property="c_idcard" column="c_idcard"  />
+		<result property="c_username" column="c_username"/>
+		<result property="c_password" column="c_password"  />
+		<result property="c_phone" column="c_phone"  />
+		<result property="c_otherid" column="c_otherid" />
+		<result property="c_email" column="c_email" />
+		<result property="c_work" column="c_work"  />
+		<result property="c_sex" column="c_sex"  />
+		<result property="c_address" column="c_address"  />
+		<result property="c_postcode" column="c_postcode"  />
+		<result property="c_qq" column="c_qq"  />
+		<result property="c_createtime" column="c_createtime"  />
+		<result property="c_onlinetime" column="c_onlinetime"  />
+		<result property="c_state" column="c_state"  />
+	</resultMap>
+		<select id="selectAllCustomerDao" resultMap="CustomerResultMap">
+		     select * from customer
+		</select>
+		<insert id="insertCustomerDao" parameterType="Customer">
+			insert into
+			customer (c_name,c_idcard,c_username,c_password,c_phone,c_otherid,c_email,c_work,c_sex,c_address,c_postcode,c_qq,c_state,c_createtime,c_opentime)
+			values(#{c_name},#{c_idcard},#{c_username},#{c_password},#{c_phone},#{c_otherid},#{c_email},#{c_work},#{c_sex},#{c_address},#{c_postcode},#{c_qq},'0',now(),now())
+	    </insert>
+		<select id="selectCustomerByIdcard" resultMap="CustomerResultMap">
+		     select * from customer where c_idcard=#{c_idcard} and c_state='0'
+		</select>
+		<select id="selectCustomerByConditionDao" parameterType="Customer" resultMap="CustomerResultMap">
+		     select * from customer
+		  <where>
+			<if test="c_name != null">
+				and c_name like CONCAT(CONCAT('%',#{c_name}),'%')
+			</if>
+			<if test="c_idcard != null">
+				and c_idcard like CONCAT(CONCAT('%',#{c_idcard}),'%')
+			</if>
+			<if test="c_username != null">
+				and c_username like CONCAT(CONCAT('%',#{c_username}),'%')
+			</if>
+			<if test=" c_state !=null ">
+			    <if test="c_state != 3">
+				   and c_state=#{c_state}
+				</if>
+			</if>
+		  </where>
+	    </select>
+		<update id="operateStopDao" parameterType="Customer">
+		   <if test="c_state==1">
+		       update customer set c_state=#{c_state},c_stoptime=now(),c_opentime=null where c_id=#{c_id}
+		   </if>
+		   <if test="c_state==0">
+		        update customer set c_state=#{c_state},c_stoptime=null,c_opentime=now() where c_id=#{c_id}
+		   </if>
+		</update>
+		
+		<select id="selectCustomerDaoByCid" parameterType="Customer" resultMap="CustomerResultMap">
+		     select * from customer where c_id=#{c_id}
+		</select>
+		<select id="detailSelectDao" parameterType="Customer" resultMap="CustomerResultMap">
+		     select * from customer where c_id=#{c_id}
+		</select>
+		<select id="selectByOtherId" parameterType="Customer" resultMap="CustomerResultMap">
+		     select * from customer where c_idcard=#{c_otherid}
+		</select>
+	    <select id="selectCustomerByidcardDao" parameterType="Customer" resultMap="CustomerResultMap">
+		     select * from customer where c_idcard=#{c_idcard}
+		</select>
+		<update id="deleteCustomerDao" parameterType="Customer" >
+		    update customer set c_state='2',c_deletetime=now(),c_stoptime=null,c_opentime=null where c_id=#{c_id} 
+		</update>
+		<update id="updateCustomerDao" parameterType="Customer">
+		update customer
+		<set>
+			<if test="c_name!=null">
+				c_name=#{c_name},
+			</if>
+			<if test="c_idcard!=null">
+				c_idcard=#{c_idcard},
+			</if>
+			<if test="c_username!=null">
+				c_username=#{c_username},
+			</if>
+			<if test="c_password!=null">
+				c_password=#{c_password},
+			</if>
+			<if test="c_phone!=null">
+				c_phone=#{c_phone},
+			</if>
+			<if test="c_otherid!=null">
+				c_otherid=#{c_otherid},
+			</if>
+			<if test="c_email!=null">
+				c_email=#{c_email},
+			</if>
+			<if test="c_work!=null">
+				c_work=#{c_work},
+			</if>
+			<if test="c_sex!=null">
+				c_sex=#{c_sex},
+			</if>
+			<if test="c_address!=null">
+				c_address=#{c_address},
+			</if>
+			<if test="c_postcode!=null">
+				c_postcode=#{c_postcode},
+			</if>
+			<if test="c_qq!=null">
+				c_qq=#{c_qq},
+			</if>
+		</set>
+		where c_id=#{c_id}
+	</update>
+		
+</mapper>		

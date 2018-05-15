@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xy.dao.CostDao">
+	<resultMap type="Cost" id="CostResultMap">
+		<id property="cost_id" column="cost_id" />
+		<result property="cost_name" column="cost_name" />
+		<result property="cost_basetime" column="cost_basetime" />
+		<result property="cost_basemoney" column="cost_basemoney" />
+		<result property="cost_singlemoney" column="cost_singlemoney" />
+		<result property="cost_createtime" column="cost_createtime" />
+		<result property="cost_starttime" column="cost_starttime" />
+		<result property="cost_state" column="cost_state" />
+		<result property="cost_type" column="cost_type" />
+		<result property="cost_instruction" column="cost_instruction"/>
+	</resultMap>
+	<select id="selectAllCostDao" resultMap="CostResultMap">
+	  	select * from cost where cost_state='0'
+	</select>
+	<select id="selectCostDao" parameterType="Cost" resultMap="CostResultMap">
+		select * from cost order by cost_createtime
+	</select>
+	<select id="selectCostDaoByid" parameterType="int" resultMap="CostResultMap">
+		select * from cost where cost_id=#{cost_id}
+	</select>
+	<select id="selectCostByIdDao" parameterType="Cost" resultMap="CostResultMap">
+		select * from cost where cost_id=#{cost_id}
+	</select>
+	<select id="selectCostByNameDao" parameterType="Cost" resultMap="CostResultMap">
+		select * from cost where cost_name=#{cost_name}
+	</select>
+	<select id="orderCostDao" parameterType="Map" resultMap="CostResultMap" >
+		select * from cost 
+		<choose>
+			<when test="order=='月租'">
+				order by cost_basemoney
+			</when>
+			<when test="order=='基费'">
+				order by cost_singlemoney
+			</when>
+			<otherwise>
+				order by cost_basetime
+			</otherwise>
+		</choose>
+		<if test="i==0">
+			desc
+		</if>
+	</select>
+	<insert id="insertCostDao" parameterType="Cost">
+		insert into cost(cost_name,cost_basetime,cost_basemoney,cost_singlemoney,cost_createtime,cost_starttime,cost_state,cost_type,cost_instruction) 
+		values(#{cost_name},
+		<choose>
+			<when test="cost_type=='0'">
+				null,#{cost_basemoney},null,
+			</when>
+			<when test="cost_type=='3'">
+				null,null,#{cost_singlemoney},
+			</when>
+			<otherwise>
+				#{cost_basetime},#{cost_basemoney},#{cost_singlemoney},
+			</otherwise>
+		</choose>
+		now(),null,'1',#{cost_type},#{cost_instruction})
+	</insert>
+	<update id="updateCostDao" parameterType="Cost">
+		update cost
+		<set>
+			<if test="cost_name!=null">
+				cost_name=#{cost_name},
+			</if>
+			<if test="cost_type!=null">
+				cost_type=#{cost_type},
+			</if>
+			<if test="cost_basetime!=null">
+				cost_basetime=#{cost_basetime},
+			</if>
+			<if test="cost_basemoney!=null">
+				cost_basemoney=#{cost_basemoney},
+			</if>
+			<if test="cost_singlemoney!=null">
+				cost_singlemoney=#{cost_singlemoney},
+			</if>
+			<if test="cost_createtime!=null">
+				cost_createtime= now(),
+			</if>
+			<if test="cost_instruction!=null">
+				cost_instruction=#{cost_instruction},
+			</if>
+		</set>
+		where cost_id=#{cost_id}
+	</update  >
+	<update id="startCostDao" parameterType="Cost">
+	      update cost set cost_starttime=now(),cost_state='0' where cost_id=#{cost_id}
+	</update>
+	<update id="deleteCostDao" parameterType="Cost">
+	      update cost set cost_state='2' where cost_id=#{cost_id}
+	</update>
+</mapper>

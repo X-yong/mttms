@@ -59,7 +59,7 @@
         			success:function(result){
         				if(result !=null || result != ""){
         					showResult()
-        				}else{alert("保存信息失败！！！")}
+        				}else {alert("保存信息失败！！！")}
         			}
         		 }) 
         		}
